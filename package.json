@@ -1,0 +1,20 @@
+{
+  "name": "version_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "formidable": "^1.1.1",
+    "mongoose": "^5.0.7",
+    "node-uuid": "^1.4.8"
+  }
+}

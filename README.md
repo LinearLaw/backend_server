@@ -1,8 +1,14 @@
-# node_InitialSever
-这是一个使用express框架搭建的简单服务器
+# 后台服务器
 
-##  目前功能
-    1、接收页面ajax请求，返回json数据到页面；
-    2、接收get请求，返回数据；
-    3、接收post请求，返回数据；
-    4、接收删除数据请求，将json数据中的指定对象删除；
+    首先安装依赖
+        npm i
+
+    接着需要安装mongodb，并将mongodb加入到环境变量
+        mongodb下载：[https://www.mongodb.com/download-center#community](https://www.mongodb.com/download-center#community)
+
+    完成前两步之后，按顺序执行以下操作：
+
+        0、在当前目录创建名为MongoData的文件夹
+        1、使用项目根目录下的mongodb_start.bat启动数据库
+        2、命令行开启服务，当前目录打开命令行，node app.js
+        3、访问http://localhost:3000
