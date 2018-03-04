@@ -4,7 +4,7 @@
 
 const mongoose = require("mongoose");
 const config = require("../config/config.js");
-mongoose.connect(config.db_url);
+mongoose.connect(config.db_url , config.db_options);
 const db = mongoose.connection;
 
 mongoose.set("debug",true);

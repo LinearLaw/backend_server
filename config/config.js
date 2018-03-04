@@ -25,6 +25,13 @@ module.exports = {
   port : 3000,
   //2、db url
   db_url:"mongodb://127.0.0.1:27017/linear",
+  db_options:{
+    server:{
+      // auto_reconnect:true,
+      poolSize:10
+    },
+    keepAlive: 120 
+  },
   //3、session config
   session:{
     name: 'SID',

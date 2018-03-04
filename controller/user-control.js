@@ -46,29 +46,37 @@ exports.userSignup = function(req,res){
 
       verifyData(tempUsername,tempPwd,res,function(){
         User.find({"username":tempUsername},function(err,result){
-          if(result.length>0){
-            res.send({
-              status:6,
-              content:"username already sign up"
-            })
-            return;
-          }
-          //加密规则
-          tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
-          let reqObj = {
-              "username"  :   tempUsername,
-              "pwd"       :   tempPwd
-          }
-          reqObj["createTime"] = new Date().getTime()
-          reqObj["userId"]    =   config.idCreate.appleSignal()
-          reqObj["shopId"]    =   config.idCreate.orangeSignal()
-          let newUser = new User(reqObj);
-          newUser.save(function(err){
+          try{
+            if(result.length>0){
               res.send({
-                  status:1,
-                  content:"success"
+                status:6,
+                content:"username already sign up"
               })
-          })
+              return;
+            }
+            //加密规则
+            tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
+            let reqObj = {
+                "username"  :   tempUsername,
+                "pwd"       :   tempPwd
+            }
+            reqObj["createTime"] = new Date().getTime()
+            reqObj["userId"]    =   config.idCreate.appleSignal()
+            reqObj["shopId"]    =   config.idCreate.orangeSignal()
+            let newUser = new User(reqObj);
+            newUser.save(function(err){
+                res.send({
+                    status:1,
+                    content:"success"
+                })
+            })
+          }catch(err){
+            console.log(err);
+            res.send({
+                status:-1,
+                content:err
+            })
+          }
         })
       });
     })
@@ -83,33 +91,49 @@ exports.userLogin = function(req,res){
       let tempPwd = fields.pwd;
       verifyData(tempUsername,tempPwd,res,function(){
         User.find({"username":tempUsername},function(err,result){
-            if(result.length > 0 ){
-              //加密
-              tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
-              if(result&&result[0].username==tempUsername&&result[0].pwd==tempPwd){
-                //token生成
-                let token = md5(tempPwd + new Date().getTime() + config.idCreate.orangeSignal())
-                let userId = result[0].userId;
-                res.session.TID = token;
-                res.session.UID = userId;
+            try{
+              console.log(result);
+              if(err){
                 res.send({
-                  status:1,
-                  content:"login success"
+                  status:-1,
+                  content:"inner server error"
                 })
-                return;
+              }
+              if(result.length > 0){
+                //加密
+                let verifyPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
+                if(result&&result[0]&&result[0].username == tempUsername && result[0].pwd == verifyPwd){
+                  //token生成
+                  let timenow = new Date().getTime();
+                  let token = md5(verifyPwd + timenow + config.idCreate.orangeSignal());
+                  let userId = result[0].userId;
+                  //session设置给req而不是res
+                  console.log(1234,req.session);
+                  req.session.TID = token;
+                  req.session.UID = userId;
+                  
+                  res.send({
+                    status:1,
+                    content:"login success"
+                  })
+                }else{
+                  res.send({
+                    status:7,
+                    content:"username or pwd error"
+                  })
+                }
               }else{
                 res.send({
-                  status:7,
-                  content:"username or pwd error"
+                  status:6,
+                  content:"user not exist"
                 })
-                return;
               }
-            }else{
+            }catch(err){
+              console.log(err);
               res.send({
-                status:6,
-                content:"user not exist"
+                status:-1,
+                content:err
               })
-              return;
             }
           })
         })
