@@ -17,8 +17,6 @@ app.all("*",function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "X-Requested-With, accept, origin, Content-Type");
     res.header("Access-Control-Allow-Credentials", "true");
-    // res.header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-    // res.header("Content-Type", "multipart/form-data;charset=utf-8");
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
