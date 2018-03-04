@@ -92,16 +92,17 @@ exports.userLogin = function(req,res){
             //加密
             tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
             if(result&&result.username==tempUsername&&result.pwd==tempPwd){
+              //token生成
+              let token = md5(tempPwd + new Date().getTime() + config.idCreate.orangeSignal())
+              let userId = result.userId;
+              res.session.TID = token;
+              res.session.UID = userId;
               res.send({
                 status:1,
                 content:"login success"
               })
               return;
             }else{
-              //token生成
-              let token = md5(tempPwd + new Date().getTime() + config.idCreate.orangeSignal())
-              res.session.SID = token;
-              res.session.username = tempUsername;
               res.send({
                 status:7,
                 content:"username or pwd error"
