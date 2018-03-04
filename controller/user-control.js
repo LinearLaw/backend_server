@@ -92,7 +92,6 @@ exports.userLogin = function(req,res){
       verifyData(tempUsername,tempPwd,res,function(){
         User.find({"username":tempUsername},function(err,result){
             try{
-              console.log(result);
               if(err){
                 res.send({
                   status:-1,
@@ -108,7 +107,6 @@ exports.userLogin = function(req,res){
                   let token = md5(verifyPwd + timenow + config.idCreate.orangeSignal());
                   let userId = result[0].userId;
                   //session设置给req而不是res
-                  console.log(1234,req.session);
                   req.session.TID = token;
                   req.session.UID = userId;
                   
