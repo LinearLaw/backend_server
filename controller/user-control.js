@@ -40,6 +40,7 @@ exports.userSignup = function(req,res){
       /**
        * [userLogin description] fields是request的body的内容
        */
+      console.log(fields);
       let tempUsername = fields.username;
       let tempPwd = fields.pwd;
 
@@ -81,31 +82,32 @@ exports.userLogin = function(req,res){
       let tempUsername = fields.username;
       let tempPwd = fields.pwd;
       verifyData(tempUsername,tempPwd,res,function(){
-        User.findOne({"username":tempUsername},function(err,result){
-            if(!result){
+        User.find({"username":tempUsername},function(err,result){
+            if(result.length > 0 ){
+              //加密
+              tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
+              if(result&&result[0].username==tempUsername&&result[0].pwd==tempPwd){
+                //token生成
+                let token = md5(tempPwd + new Date().getTime() + config.idCreate.orangeSignal())
+                let userId = result[0].userId;
+                res.session.TID = token;
+                res.session.UID = userId;
+                res.send({
+                  status:1,
+                  content:"login success"
+                })
+                return;
+              }else{
+                res.send({
+                  status:7,
+                  content:"username or pwd error"
+                })
+                return;
+              }
+            }else{
               res.send({
                 status:6,
                 content:"user not exist"
-              })
-              return;
-            }
-            //加密
-            tempPwd = md5(md5(tempPwd).substr(4,7) + md5(tempPwd));
-            if(result&&result.username==tempUsername&&result.pwd==tempPwd){
-              //token生成
-              let token = md5(tempPwd + new Date().getTime() + config.idCreate.orangeSignal())
-              let userId = result.userId;
-              res.session.TID = token;
-              res.session.UID = userId;
-              res.send({
-                status:1,
-                content:"login success"
-              })
-              return;
-            }else{
-              res.send({
-                status:7,
-                content:"username or pwd error"
               })
               return;
             }

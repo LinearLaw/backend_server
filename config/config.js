@@ -39,5 +39,8 @@ module.exports = {
   idCreate:idCreate,
 
   //5、表单验证规则
-  regConfig:regConfig
+  regConfig:regConfig,
+
+  //6、接受的ip
+  ipWithGet:"http://127.0.0.1:8090"
 }
