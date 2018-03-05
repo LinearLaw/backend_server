@@ -8,7 +8,7 @@ exports.userLogin = userControl.userLogin;
 
 //shop-service
 exports.addShop = function(req,res){
-  if(!config.forbidden?){
+  if(!config.forbidden){
     return;
   }else{
     shopControl.addShop(req,res);
