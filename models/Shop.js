@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const db = require("./db.js");
 
 const shopSchema = new mongoose.Schema({
-    shopId      :   {   type:Number },      //店铺id，从010000开始一次递增，前10000编号平台保留
+    userId      :   {   type:String },
+    shopId      :   {   type:Number },      //店铺id
     shopname    :   {   type:String },
     createDate  :   {   type:Number },
     shopLogo    :   {   type:String },

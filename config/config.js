@@ -13,6 +13,21 @@ const idCreate = {
     return uuid.v4();
   }
 }
+
+/**
+ * @desc 禁止进入页面
+ */
+const forbidden = (req,res)=>{
+  if(!req.session.TID||!req.session.UID){
+    res.send({
+      status:401,
+      content:"user not login"
+    });
+    return false;
+  }else{
+    return true;
+  }
+}
 /**
  * [description] 正则表达式配置
  */
@@ -49,5 +64,8 @@ module.exports = {
   regConfig:regConfig,
 
   //6、接受的ip
-  ipWithGet:"http://127.0.0.1:8090"
+  ipWithGet:"http://127.0.0.1:8090",
+
+  //7、禁止进入
+  forbidden:forbidden
 }
