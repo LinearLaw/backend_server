@@ -4,11 +4,13 @@ const db = require("./db.js");
 const shopSchema = new mongoose.Schema({
     userId      :   {   type:String },
     shopId      :   {   type:Number },      //店铺id
-    shopname    :   {   type:String },
     createDate  :   {   type:Number },
     shopLogo    :   {   type:String },
-    shopDetail  :   {   type:String },
+
+    shopname    :   {   type:String },
     shoptype    :   {   type:Number },      //店铺类别，个人店铺 or 企业店铺
+    shopDetail  :   {   type:String },
+    agreement   :   {   type:String },
     multishop   :   [                       //第三方店铺链接   
         {
             platname:{ type:String },
