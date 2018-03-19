@@ -34,6 +34,10 @@ app.get("/signup" , (req,res)=>{    res.render("signup");   })
 app.post("/dosignup",router.userSignup);
 app.post("/dologin",router.userLogin);
 
+
+app.post("/doeditshop",router.editShop);
+app.post("/doaddshop",router.addShop);
+
 //当post请求的 content-type不是one of the 
 //  “application/x-www-form-urlencoded, 
 //    multipart/form-data, or text/plain”, Preflighted requests就会被发起，会出现options请求。

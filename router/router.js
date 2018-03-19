@@ -14,3 +14,10 @@ exports.addShop = function(req,res){
     shopControl.addShop(req,res);
   }
 }
+exports.editShop = function(req,res){
+  if(!config.forbidden){
+    return;
+  }else{
+    shopControl.editShop(req,res);
+  }
+}
