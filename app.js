@@ -34,7 +34,7 @@ app.get("/signup" , (req,res)=>{    res.render("signup");   })
 app.post("/dosignup",router.userSignup);
 app.post("/dologin",router.userLogin);
 
-
+app.get("/dogetshop",router.getShop);
 app.post("/doeditshop",router.editShop);
 app.post("/doaddshop",router.addShop);
 

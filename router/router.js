@@ -21,3 +21,14 @@ exports.editShop = function(req,res){
     shopControl.editShop(req,res);
   }
 }
+exports.getShop = function(req,res){
+  if(!config.forbidden){
+    res.send({
+      status:-1,
+      content:"该用户未登录！"
+    })
+    return;
+  }else{
+    shopControl.getShop(req,res);
+  } 
+}
