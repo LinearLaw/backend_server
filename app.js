@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const config = require("./config/config.js");
-const router = require("./router/router.js")
+const router = require("./router/router.js");
 const session = require("express-session");
 
 //body-parser处理post请求
