@@ -12,6 +12,8 @@ const session = require("express-session");
 app.set("view engine","ejs");
 app.use(express.static("./public"));
 app.use(session(config.session));
+
+//处理跨域
 app.all("*",function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -20,6 +22,10 @@ app.all("*",function(req, res, next) {
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
+
+
+//挂载路由
+app.use("/",router);
 
 /**
  * @description  路由
@@ -31,15 +37,9 @@ app.get("/",(req,res)=>{
 app.get("/login"  , (req,res)=>{    res.render("login");    })
 app.get("/signup" , (req,res)=>{    res.render("signup");   })
 
-app.post("/dosignup",router.userSignup);
-app.post("/dologin",router.userLogin);
 
-app.get("/dogetshop",router.getShop);
-app.post("/doeditshop",router.editShop);
-app.post("/doaddshop",router.addShop);
-
-//当post请求的 content-type不是one of the 
-//  “application/x-www-form-urlencoded, 
+//当post请求的 content-type不是one of the
+//  “application/x-www-form-urlencoded,
 //    multipart/form-data, or text/plain”, Preflighted requests就会被发起，会出现options请求。
 
 /**
